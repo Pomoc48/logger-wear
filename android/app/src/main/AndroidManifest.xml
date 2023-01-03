@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.log_app_wear">
+    package="xyz.lukawski.log_app_wear">
    <application
-        android:label="log_app_wear"
-        android:name="${applicationName}"
+        android:label="Logger"
+        android:name="Logger"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

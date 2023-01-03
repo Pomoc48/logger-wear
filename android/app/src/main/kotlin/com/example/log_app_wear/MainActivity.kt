@@ -1,4 +1,4 @@
-package com.example.log_app_wear
+package xyz.lukawski.log_app_wear
 
 import io.flutter.embedding.android.FlutterActivity
 
