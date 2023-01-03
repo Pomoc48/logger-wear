@@ -9,18 +9,7 @@ abstract class HomeEvent extends Equatable {
 
 class AutoLogin extends HomeEvent {}
 
-class RequestLogin extends HomeEvent {
-  final String username;
-  final String password;
-
-  const RequestLogin({
-    required this.username,
-    required this.password,
-  });
-
-  @override
-  List<Object> get props => [username, password];
-}
+class RequestPin extends HomeEvent {}
 
 class UpdateHome extends HomeEvent {
   final List<ListOfItems> lists;

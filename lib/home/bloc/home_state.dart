@@ -31,4 +31,4 @@ class HomeLoaded extends HomeState {
   List<Object> get props => [lists, token];
 }
 
-class HomeLoginRequired extends HomeState {}
+class HomePinRequired extends HomeState {}

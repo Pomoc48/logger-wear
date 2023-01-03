@@ -25,7 +25,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           emit(HomeError(token: token));
         }
       } else {
-        emit(HomeLoginRequired());
+        emit(HomePinRequired());
       }
     });
 
