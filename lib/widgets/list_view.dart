@@ -27,26 +27,43 @@ class HomeList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(32),
+                    padding: const EdgeInsets.fromLTRB(32, 32, 32, 16),
                     child: Column(
                       children: [
                         Text(
                           lists[index].name,
-                          style: Theme.of(context).textTheme.titleLarge!
-                              .copyWith(fontWeight: FontWeight.bold),
                           overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleLarge!
+                              .copyWith(
+                                fontWeight: FontWeight.bold,
+                                shadows: [
+                                  const Shadow(
+                                    color: Colors.black,
+                                    blurRadius: 20,
+                                  ),
+                                ],
+                              ),
                         ),
                         const SizedBox(height: 2),
                         Text(
                           subtitleCount(lists[index].count),
-                          style: Theme.of(context).textTheme.titleSmall,
+                          style: Theme.of(context).textTheme.titleMedium!
+                              .copyWith(
+                                fontWeight: FontWeight.normal,
+                                shadows: [
+                                  const Shadow(
+                                    color: Colors.black,
+                                    blurRadius: 20,
+                                  ),
+                                ],
+                              ),
                         ),
                       ],
                     ),
                   ),
                   WatchButton(
                     onTap: () {},
-                    title: "Add",
+                    title: "Quick Add",
                   ),
                   const SizedBox(height: 12),
                 ],

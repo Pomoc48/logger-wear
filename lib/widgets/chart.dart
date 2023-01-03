@@ -15,7 +15,7 @@ class LineChart extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 28),
+      padding: const EdgeInsets.symmetric(vertical: 24),
       child: Sparkline(
         lineWidth: 2,
         data: dataConverted,
@@ -32,7 +32,7 @@ class LineChart extends StatelessWidget {
           end: Alignment.topCenter,
           colors: [
             Theme.of(context).colorScheme.primary.withOpacity(0.0),
-            Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            Theme.of(context).colorScheme.primary.withOpacity(0.2),
           ],
         ),
         fillMode: FillMode.below,

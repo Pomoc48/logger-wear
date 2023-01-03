@@ -15,11 +15,15 @@ class WatchButton extends StatelessWidget {
         height: 56,
         width: 160,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: Theme.of(context).colorScheme.primaryContainer
+              .withOpacity(0.75),
           borderRadius: BorderRadius.circular(999),
         ),
         child: Center(
-          child: Text(title, style: Theme.of(context).textTheme.titleMedium),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
         ),
       ),
     );
