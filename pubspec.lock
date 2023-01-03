@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  chart_sparkline:
+    dependency: "direct main"
+    description:
+      name: chart_sparkline
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.12"
   clock:
     dependency: transitive
     description:
@@ -242,6 +249,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.5"
+  scroll_snap_list:
+    dependency: "direct main"
+    description:
+      name: scroll_snap_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.1"
   sky_engine:
     dependency: transitive
     description: flutter

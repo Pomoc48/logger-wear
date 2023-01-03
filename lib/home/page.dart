@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_app_wear/home/bloc/home_bloc.dart';
 import 'package:log_app_wear/widgets/error.dart';
+import 'package:log_app_wear/widgets/list_view.dart';
 import 'package:log_app_wear/widgets/loading.dart';
 import 'package:log_app_wear/widgets/pin_generated.dart';
 import 'package:log_app_wear/widgets/pin_view.dart';
 import 'package:wear/wear.dart';
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
             body: BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
                 if (state is HomeLoaded) {
-                  return const PageLoading();
+                  return HomeList(lists: state.lists);
                 }
 
                 if (state is HomePinRequired) {
