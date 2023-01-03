@@ -11,16 +11,6 @@ class AutoLogin extends HomeEvent {}
 
 class RequestPin extends HomeEvent {}
 
-class UpdateHome extends HomeEvent {
-  final List<ListOfItems> lists;
-  final String token;
-
-  const UpdateHome({required this.lists, required this.token});
-
-  @override
-  List<Object> get props => [lists, token];
-}
-
 class QuickInsertHome extends HomeEvent {
   final ListOfItems list;
   final int timestamp;

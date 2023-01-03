@@ -9,14 +9,7 @@ abstract class HomeState extends Equatable {
 
 class HomeInitial extends HomeState {}
 
-class HomeError extends HomeState {
-  final String token;
-
-  const HomeError({required this.token});
-
-  @override
-  List<Object> get props => [token];
-}
+class HomeError extends HomeState {}
 
 class HomeLoaded extends HomeState {
   final String token;
@@ -32,3 +25,13 @@ class HomeLoaded extends HomeState {
 }
 
 class HomePinRequired extends HomeState {}
+
+class HomePinGenerated extends HomeState {
+  final String pin;
+  final int id;
+
+  const HomePinGenerated({required this.id, required this.pin});
+
+  @override
+  List<Object> get props => [pin, id];
+}

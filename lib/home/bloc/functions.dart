@@ -19,6 +19,24 @@ Future<Map> getToken() async {
   return loginResult(response: response);
 }
 
+Future<Map> createConnection() async {
+  Response response = await put(
+    Uri.parse("https://loggerapp.lukawski.xyz/connect/"),
+  );
+
+  Map map = jsonDecode(utf8.decode(response.bodyBytes));
+
+  if (response.statusCode == 200) {
+    return {
+      "success": true,
+      "id": map["id"],
+      "pin": map["pin"],
+    };
+  }
+
+  return {"success": false, "message": map["message"]};
+}
+
 Future<Map> getLists({required String token}) async {
   Response response = await makeRequest(
     url: "https://loggerapp.lukawski.xyz/lists/",

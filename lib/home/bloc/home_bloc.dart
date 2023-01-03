@@ -22,44 +22,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             token: map["token"],
           ));
         } catch (e) {
-          emit(HomeError(token: token));
+          emit(HomeError());
         }
       } else {
         emit(HomePinRequired());
       }
     });
 
-    // on<RequestLogin>((event, emit) async {
-    //   Map response = await manualLoginResult(
-    //     username: event.username,
-    //     password: event.password,
-    //   );
+    on<RequestPin>((event, emit) async {
+      Map response = await createConnection();
 
-    //   if (response["success"]) {
-    //     String token = response["token"];
-    //     try {
-    //       Map map = await getLists(token: token);
-    //       List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-    //       sortList(list);
-
-    //       emit(HomeLoaded(
-    //         lists: list,
-    //         token: map["token"],
-    //         sort: getSortType(),
-    //       ));
-    //     } catch (e) {
-    //       emit(HomeError(token: token));
-    //     }
-    //   } else {
-    //     emit(HomeMessage(response["message"]));
-    //   }
-    // });
-
-    on<UpdateHome>((event, emit) {
-      emit(HomeLoaded(
-        lists: event.lists,
-        token: event.token,
-      ));
+      if (response["success"]) {
+        emit(HomePinGenerated(id: response["id"], pin: response["pin"]));
+      } else {
+        emit(HomeError());
+      }
     });
 
     // on<QuickInsertHome>((event, emit) async {
@@ -87,7 +64,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     // });
 
     on<ReportHomeError>((event, emit) {
-      emit(HomeError(token: event.token));
+      emit(HomeError());
     });
   }
 }

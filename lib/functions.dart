@@ -52,23 +52,6 @@ Future<dynamic> makeRequest({
   };
 }
 
-Future<void> refresh({
-  required BuildContext context,
-  required String token,
-}) async {
-  try {
-    Map map = await getLists(token: token);
-    List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
-    // ignore: use_build_context_synchronously
-    BlocProvider.of<HomeBloc>(context).add(UpdateHome(
-      lists: list,
-      token: map["token"],
-    ));
-  } catch (e) {
-    BlocProvider.of<HomeBloc>(context).add(ReportHomeError(token));
-  }
-}
-
 String subtitleCount(int count) {
   return count == 1 ? "$count time" : "$count times";
 }
