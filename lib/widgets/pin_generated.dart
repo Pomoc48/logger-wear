@@ -34,18 +34,21 @@ class PinGenerated extends StatelessWidget {
   }
 
   void runRefresh(BuildContext context, int id) async {
-    Response response = await get(
-      Uri.parse("https://loggerapp.lukawski.xyz/connect/?id=$id"),
-    );
+    try {
+      Response response = await get(
+        Uri.parse("https://loggerapp.lukawski.xyz/connect/?id=$id"),
+      );
 
-    Map map = jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200) {
+        Map map = jsonDecode(utf8.decode(response.bodyBytes));
+        await GetStorage().write("refreshToken", map["refresh_token"]);
+        BlocProvider.of<HomeBloc>(context).add(AutoLogin());
 
-    if (response.statusCode == 200) {
-      await GetStorage().write("refreshToken", map["refresh_token"]);
-      BlocProvider.of<HomeBloc>(context).add(AutoLogin());
-
-    } else {
-      runRefresh(context, id);
+      } else {
+        runRefresh(context, id);
+      }
+    } catch (e) {
+      BlocProvider.of<HomeBloc>(context).add(ReportHomeError());
     }
   }
 }

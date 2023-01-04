@@ -26,11 +26,4 @@ class QuickInsertHome extends HomeEvent {
   List<Object> get props => [list, token, timestamp];
 }
 
-class ReportHomeError extends HomeEvent {
-  final String token;
-
-  const ReportHomeError(this.token);
-
-  @override
-  List<Object> get props => [token];
-}
+class ReportHomeError extends HomeEvent {}
