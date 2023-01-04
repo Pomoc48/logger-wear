@@ -4,6 +4,7 @@ import 'package:log_app_wear/functions.dart';
 import 'package:log_app_wear/home/bloc/home_bloc.dart';
 import 'package:log_app_wear/widgets/button.dart';
 import 'package:log_app_wear/widgets/chart.dart';
+import 'package:marquee_widget/marquee_widget.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:wearable_rotary/wearable_rotary.dart';
 
@@ -30,23 +31,31 @@ class HomeList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(32, 32, 32, 16),
+                    padding: const EdgeInsets.fromLTRB(30, 30, 30, 16),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          state.lists[index].name,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleLarge!
-                              .copyWith(
-                                fontWeight: FontWeight.bold,
-                                shadows: [
-                                  const Shadow(
-                                    color: Colors.black,
-                                    blurRadius: 20,
+                        Center(
+                          child: Marquee(
+                            backDuration: const Duration(milliseconds: 500),
+                            backwardAnimation: Curves.easeOutCirc,
+                            child: Text(
+                              state.lists[index].name,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.titleLarge!
+                                  .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    shadows: [
+                                      const Shadow(
+                                        color: Colors.black,
+                                        blurRadius: 20,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                            ),
+                          ),
                         ),
+                        
                         const SizedBox(height: 2),
                         Text(
                           subtitleCount(state.lists[index].count),
@@ -60,6 +69,7 @@ class HomeList extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
