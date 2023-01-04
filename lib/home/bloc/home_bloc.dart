@@ -39,29 +39,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
     });
 
-    // on<QuickInsertHome>((event, emit) async {
-    //   try {
-    //     Map response = await addItem(
-    //       listId: event.list.id,
-    //       timestamp: event.timestamp,
-    //       token: event.token,
-    //     );
+    on<QuickInsertHome>((event, emit) async {
+      try {
+        Map response = await addItem(
+          listId: event.list.id,
+          timestamp: event.timestamp,
+          token: event.token,
+        );
 
-    //     if (response["success"]) {
-    //       Map map = await getLists(token: response["token"]);
-    //       List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+        if (response["success"]) {
+          Map map = await getLists(token: response["token"]);
+          List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
 
-    //       emit(HomeLoaded(
-    //         lists: list,
-    //         token: map["token"],
-    //       ));
-    //     } else {
-    //       emit(HomeMessage(response["message"]));
-    //     }
-    //   } catch (e) {
-    //     emit(HomeError(token: event.token));
-    //   }
-    // });
+          emit(HomeLoaded(
+            lists: list,
+            token: map["token"],
+          ));
+        } else {
+          emit(HomeError());
+        }
+      } catch (e) {
+        emit(HomeError());
+      }
+    });
 
     on<ReportHomeError>((event, emit) {
       emit(HomeError());

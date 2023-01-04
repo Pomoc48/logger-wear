@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
             body: BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
                 if (state is HomeLoaded) {
-                  return HomeList(lists: state.lists);
+                  return HomeList(state: state);
                 }
 
                 if (state is HomePinRequired) {

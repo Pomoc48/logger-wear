@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_app_wear/functions.dart';
-import 'package:log_app_wear/models/list.dart';
+import 'package:log_app_wear/home/bloc/home_bloc.dart';
 import 'package:log_app_wear/widgets/button.dart';
 import 'package:log_app_wear/widgets/chart.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class HomeList extends StatelessWidget {
-  const HomeList({required this.lists, super.key});
+  const HomeList({required this.state, super.key});
 
-  final List<ListOfItems> lists;
+  final HomeLoaded state;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class HomeList extends StatelessWidget {
             children: [
               SizedBox(
                 height: 120,
-                child: LineChart(data: lists[index].chartData),
+                child: LineChart(data: state.lists[index].chartData),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,7 +32,7 @@ class HomeList extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          lists[index].name,
+                          state.lists[index].name,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.titleLarge!
                               .copyWith(
@@ -46,7 +47,7 @@ class HomeList extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          subtitleCount(lists[index].count),
+                          subtitleCount(state.lists[index].count),
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(
                                 fontWeight: FontWeight.normal,
@@ -62,7 +63,15 @@ class HomeList extends StatelessWidget {
                     ),
                   ),
                   WatchButton(
-                    onTap: () {},
+                    onTap: () {
+                      BlocProvider.of<HomeBloc>(context).add(
+                        QuickInsertHome(
+                          timestamp: dateToTimestamp(DateTime.now()),
+                          list: state.lists[index],
+                          token: state.token,
+                        ),
+                      );
+                    },
                     title: "Quick Add",
                   ),
                   const SizedBox(height: 12),
@@ -73,7 +82,7 @@ class HomeList extends StatelessWidget {
         );
       },
       scrollDirection: Axis.vertical,
-      itemCount: lists.length,
+      itemCount: state.lists.length,
       itemSize: 200,
       onItemFocus: (p0) {},
     );

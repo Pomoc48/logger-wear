@@ -5,6 +5,8 @@ import 'package:http/http.dart';
 import 'package:log_app_wear/functions.dart';
 import 'package:log_app_wear/models/list.dart';
 
+String backend = "https://loggerapp.lukawski.xyz/";
+
 Future<Map> getToken() async {
   String? refreshToken = GetStorage().read("refreshToken");
   if (refreshToken == null) {
@@ -12,7 +14,7 @@ Future<Map> getToken() async {
   }
 
   Response response = await post(
-    Uri.parse("https://loggerapp.lukawski.xyz/refresh/"),
+    Uri.parse("${backend}refresh/"),
     headers: {"Rtoken": refreshToken},
   );
 
@@ -20,10 +22,7 @@ Future<Map> getToken() async {
 }
 
 Future<Map> createConnection() async {
-  Response response = await put(
-    Uri.parse("https://loggerapp.lukawski.xyz/connect/"),
-  );
-
+  Response response = await put(Uri.parse("${backend}connect/"));
   Map map = jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
@@ -39,7 +38,7 @@ Future<Map> createConnection() async {
 
 Future<Map> getLists({required String token}) async {
   Response response = await makeRequest(
-    url: "https://loggerapp.lukawski.xyz/lists/",
+    url: "${backend}lists/",
     headers: {"Token": token},
     type: RequestType.get,
   );
@@ -75,4 +74,16 @@ Future<Map> loginResult({
 
 Future<void> forgetSavedToken() async {
   await GetStorage().remove("refreshToken");
+}
+
+Future<Map> addItem({
+  required int listId,
+  required int timestamp,
+  required String token,
+}) async {
+  return await makeRequest(
+    url: "${backend}items/?timestamp=$timestamp&list_id=$listId",
+    headers: {"Token": token},
+    type: RequestType.post,
+  );
 }
