@@ -3,7 +3,7 @@
 Wear OS wersion of [Logger](https://github.com/Pomoc48/logger_app),
 that allows you to quickly add items to your lists from your smartwatch.
 
-![App screenshot](screenshots/Screenshot_1672823002.png)
+![App screenshot](screenshots/Screenshot1.png)
 <!-- <img src="screenshots/Screenshot_1672823002.png" alt="App screenshot" width="300"/> -->
 
 ## Setup
