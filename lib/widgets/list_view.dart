@@ -5,6 +5,7 @@ import 'package:log_app_wear/home/bloc/home_bloc.dart';
 import 'package:log_app_wear/widgets/button.dart';
 import 'package:log_app_wear/widgets/chart.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:wearable_rotary/wearable_rotary.dart';
 
 class HomeList extends StatelessWidget {
   const HomeList({required this.state, super.key});
@@ -14,6 +15,7 @@ class HomeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScrollSnapList(
+      listController: RotaryScrollController(),
       itemBuilder: (context, index) {
         return SizedBox(
           height: 200,
