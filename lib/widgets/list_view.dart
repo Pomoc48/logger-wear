@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_app_wear/functions.dart';
@@ -5,7 +6,7 @@ import 'package:log_app_wear/home/bloc/home_bloc.dart';
 import 'package:log_app_wear/widgets/button.dart';
 import 'package:log_app_wear/widgets/chart.dart';
 import 'package:marquee_widget/marquee_widget.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:vibration/vibration.dart';
 import 'package:wearable_rotary/wearable_rotary.dart';
 
 class HomeList extends StatelessWidget {
@@ -15,11 +16,40 @@ class HomeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScrollSnapList(
-      listController: RotaryScrollController(),
-      itemBuilder: (context, index) {
-        return SizedBox(
-          height: 200,
+    CarouselController carouselController = CarouselController();
+
+    rotaryEvents.listen((RotaryEvent event) {
+      if (event.direction == RotaryDirection.clockwise) {
+        Vibration.vibrate(duration: 20, amplitude: 128);
+
+        carouselController.nextPage(
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeInOutSine,
+        );
+      } else if (event.direction == RotaryDirection.counterClockwise) {
+        Vibration.vibrate(duration: 20, amplitude: 128);
+
+        carouselController.previousPage(
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeInOutSine,
+        );
+      }
+    });
+
+    return CarouselSlider.builder(
+      carouselController: carouselController,
+      options: CarouselOptions(
+        autoPlay: false,
+        aspectRatio: 1/1,
+        scrollDirection: Axis.vertical,
+        viewportFraction: 1,
+        enlargeCenterPage: true,
+        enlargeFactor: 0.5,
+      ),
+
+      itemBuilder: (context, index, pageIndex) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30),
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -30,48 +60,49 @@ class HomeList extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 30, 30, 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Center(
-                          child: Marquee(
-                            backDuration: const Duration(milliseconds: 500),
-                            backwardAnimation: Curves.easeOutCirc,
-                            child: Text(
-                              state.lists[index].name,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.titleLarge!
-                                  .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    shadows: [
-                                      const Shadow(
-                                        color: Colors.black,
-                                        blurRadius: 20,
-                                      ),
-                                    ],
-                                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Center(
+                            child: Marquee(
+                              backDuration: const Duration(milliseconds: 500),
+                              backwardAnimation: Curves.easeOutCirc,
+                              child: Text(
+                                state.lists[index].name,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.titleLarge!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        const Shadow(
+                                          color: Colors.black,
+                                          blurRadius: 20,
+                                        ),
+                                      ],
+                                    ),
+                              ),
                             ),
                           ),
-                        ),
-                        
-                        const SizedBox(height: 2),
-                        Text(
-                          subtitleCount(state.lists[index].count),
-                          style: Theme.of(context).textTheme.titleMedium!
-                              .copyWith(
-                                fontWeight: FontWeight.normal,
-                                shadows: [
-                                  const Shadow(
-                                    color: Colors.black,
-                                    blurRadius: 20,
-                                  ),
-                                ],
-                              ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                          Text(
+                            subtitleCount(state.lists[index].count),
+                            style: Theme.of(context).textTheme.titleMedium!
+                                .copyWith(
+                                  fontWeight: FontWeight.normal,
+                                  shadows: [
+                                    const Shadow(
+                                      color: Colors.black,
+                                      blurRadius: 20,
+                                    ),
+                                  ],
+                                ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   WatchButton(
@@ -86,17 +117,13 @@ class HomeList extends StatelessWidget {
                     },
                     title: "Quick Add",
                   ),
-                  const SizedBox(height: 12),
                 ],
               ),
             ],
           ),
         );
       },
-      scrollDirection: Axis.vertical,
       itemCount: state.lists.length,
-      itemSize: 200,
-      onItemFocus: (p0) {},
     );
   }
 }
