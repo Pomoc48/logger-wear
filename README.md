@@ -1,16 +1,22 @@
-# log_app_wear
+# Logger (Wear)
 
-A new Flutter project.
+Wear OS wersion of [Logger](https://github.com/Pomoc48/logger_app),
+that allows you to quickly add items to your lists from your smartwatch.
 
-## Getting Started
+![App screenshot](screenshots/Screenshot_1672823002.png)
+<!-- <img src="screenshots/Screenshot_1672823002.png" alt="App screenshot" width="300"/> -->
 
-This project is a starting point for a Flutter application.
+## Setup
 
-A few resources to get you started if this is your first Flutter project:
+1. Create a [new account](https://loggerapp.lukawski.xyz/#/register) (if you haven't already)
+2. Open this app on your watch
+3. Generate pairing code
+4. Enter the code in a [full version of the app](https://github.com/Pomoc48/logger_app)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The app should now be connected with your account and ready to use.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## License
+
+This project is licensed under the GNU General Public License.
+\
+Please see the [licence file](LICENSE) for more information.
