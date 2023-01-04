@@ -16,6 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         try {
           Map map = await getLists(token: token);
           List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+          list.sort((a, b) => a.name.compareTo(b.name));
 
           emit(HomeLoaded(
             lists: list,
@@ -50,6 +51,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         if (response["success"]) {
           Map map = await getLists(token: response["token"]);
           List<ListOfItems> list = List<ListOfItems>.from(map["data"]);
+          list.sort((a, b) => a.name.compareTo(b.name));
 
           emit(HomeLoaded(
             lists: list,
